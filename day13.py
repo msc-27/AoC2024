@@ -1,16 +1,13 @@
 import re
-with open('input') as f:
-    paras = [p.split('\n') for p in f.read().strip('\n').split('\n\n')]
+with open('input') as f: paras = f.read().split('\n\n')
 def solve(para, offset = 0):
     cost = 0
-    ax, ay = list(map(int, re.findall('[0-9]+', para[0])))
-    bx, by = list(map(int, re.findall('[0-9]+', para[1])))
-    px, py = list(map(int, re.findall('[0-9]+', para[2])))
+    ax,ay,bx,by,px,py = list(map(int, re.findall('[0-9]+', para)))
 # ax.A + bx.B = px + offset
 # ay.A + by.B = py + offset
 # Solve the above for A and B. If the solutions are integers, we can win!
-# There is exactly one solution unless both buttons move the claw in the
-# same overall direction. Assume this doesn't happen.
+# There can only be one solution unless both buttons move the claw
+# in the same direction by different amounts. Assume this is never the case.
     tx = px + offset
     ty = py + offset
     A_top = tx * by - ty * bx
