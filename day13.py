@@ -6,8 +6,8 @@ def solve(para, offset = 0):
 # ax.A + bx.B = px + offset
 # ay.A + by.B = py + offset
 # Solve the above for A and B. If the solutions are integers, we can win!
-# There can only be one solution unless both buttons move the claw
-# in the same direction by different amounts. Assume this is never the case.
+# There is exactly one solution unless both buttons move the claw
+# in the same overall direction. Assume this never happens.
     tx = px + offset
     ty = py + offset
     A_top = tx * by - ty * bx
