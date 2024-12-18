@@ -8,7 +8,7 @@ def trans(p):
     return [((x,y),1) for x,y in grid.atmanhat(p,1) if 0 <= x <= grid_size \
                                                    and 0 <= y <= grid_size \
                                                    and (x,y) not in corr]
-def targ(p): return p == (70,70)
+def targ(p): return p == (grid_size, grid_size)
 
 a = astar.astar((0,0), trans)
 n,path = a.run(targ)
