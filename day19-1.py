@@ -7,22 +7,16 @@ patterns = lines[2:]
 
 # Initial attempt to solve the problem: throw a cache at it
 # Improved over original attempt by examining each length of towel once
+# Also get rid of separate part 1 solution
 
 @cache
-def part1(p):
-    if p == '': return True
-    for n in range(max_len_t):
-        if p[:n+1] in t_sets[n]:
-            if part1(p[n+1:]): return True
-    return False
-
-@cache
-def part2(p):
+def solve(p):
     if p == '': return 1
     ways = 0
     for n in range(max_len_t):
-        if p[:n+1] in t_sets[n]: ways += part2(p[n+1:])
+        if p[:n+1] in t_sets[n]: ways += solve(p[n+1:])
     return ways
 
-print(sum(part1(p) for p in patterns))
-print(sum(part2(p) for p in patterns))
+solutions = [solve(p) for p in patterns]
+print(sum(s > 0 for s in solutions))
+print(sum(solutions))
