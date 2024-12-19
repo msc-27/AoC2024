@@ -12,7 +12,6 @@ def solve(p):
     for i in range(1, len(p)+1):
         ways.append(0)
         for n in range(min(max_len_t, i)):
-            candidate = p[i-n-1:i]
             if p[i-n-1:i] in t_sets[n]: ways[i] += ways[i-n-1]
     return ways[-1]
 
