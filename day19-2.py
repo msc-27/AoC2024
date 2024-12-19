@@ -5,7 +5,7 @@ max_len_t = max(len(t) for t in towels)
 t_sets = [{t for t in towels if len(t) == i+1} for i in range(max_len_t)]
 patterns = lines[2:]
 
-# Faster iterative approach
+# Alternative iterative approach
 
 def solve(p):
     ways = [1] # ways[i] = number of ways to make first i stripes of p
