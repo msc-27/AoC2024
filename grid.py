@@ -35,11 +35,26 @@ def atrange(point, dist):
 def inmanhat(point, dist, include_point = False):
     dim = len(point)
     if dim == 1:
-        for x in range(-dist, dist+1):
-            if include_point or dist != 0: yield (point[0]+x,)
-    else:
-        for x in range(-dist, dist+1):
-            for p in ((point[0]+x,) + q for q in inmanhat(point[1:], dist - abs(x), True)):
+        p = point[0]
+        for dp in range(-dist, dist+1):
+            if dp or include_point: yield (p+dp,)
+    elif dim == 2: # special case for performance
+        if dist == 0:
+            if include_point: yield point
+        else:
+            x,y = point
+            for dx in range(-dist, 0):
+                yield from ((x+dx, yy) for yy in range(y-dist-dx, y+dist+1+dx))
+            if include_point:
+                yield from ((x, yy) for yy in range(y-dist, y+dist+1))
+            else:
+                yield from ((x, yy) for yy in range(y-dist, y))
+                yield from ((x, yy) for yy in range(y+1, y+dist+1))
+            for dx in range(1, dist+1):
+                yield from ((x+dx, yy) for yy in range(y-dist+dx, y+dist+1-dx))
+    else: # general >= 3 dimensional case
+        for d in range(-dist, dist+1):
+            for p in ((point[0]+d,) + q for q in inmanhat(point[1:], dist-abs(d), True)):
                 if include_point or p != point: yield p
 
 def atmanhat(point, dist):
@@ -49,5 +64,4 @@ def atmanhat(point, dist):
         if dist != 0: yield (point[0]+dist,)
     else:
         for x in range(-dist, dist+1):
-            for p in ((point[0]+x,) + q for q in atmanhat(point[1:], dist - abs(x))):
-                yield p
+            yield from ((point[0]+x,) + q for q in atmanhat(point[1:], dist - abs(x)))
